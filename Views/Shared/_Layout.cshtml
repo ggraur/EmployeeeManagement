@@ -50,6 +50,7 @@
                    </li>
                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                    {
+
                        <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,7 +63,10 @@
                            </div>
                             
                        </li>
-                   }
+                    }
+
+
+
                </ul>
                <ul class="navbar-nav ml-auto">
                    @if (signInManager.IsSignedIn(User))

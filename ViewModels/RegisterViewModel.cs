@@ -13,7 +13,8 @@ namespace EmployeeeManagement.ViewModels
         [Required]
         [EmailAddress]
         [Remote(action: "IsEmailInUse",controller:"Account")]
-        [ValidEmailDomain(allowedDomain:"yahoo.com",ErrorMessage = "Email domain must be yahoo.com")]
+        //        [ValidEmailDomain(allowedDomain:"yahoo.com",ErrorMessage = "Email domain must be yahoo.com")]
+        [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid Email Format")]
         public string Email { get; set; }
 
         [Required]

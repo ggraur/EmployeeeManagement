@@ -34,16 +34,59 @@ namespace EmployeeeManagement.Controllers
         public async Task<IActionResult>EditUser(string id)
         {
             var user = await userManager.FindByNameAsync(id);
-            if (user == null)
+            if(user == null)
             {
                 ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
 
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                City = user.City,
+                Claims= userClaims.Select(c=> c.Value).ToList(),
+                Roles=userRoles
+            };
 
             return View();
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel _model)
+        {
+            var user = await userManager.FindByNameAsync(_model.Id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {_model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else 
+            {
+                user.Email = _model.Email;
+                user.UserName = _model.UserName;
+                user.City = _model.City;
+
+                var result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(_model);
+            }
+
+        }
+
+
 
         [HttpGet]
         public IActionResult CreateRole()
@@ -209,10 +252,12 @@ namespace EmployeeeManagement.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
+
         public IActionResult AccessDenied()
         { 
-            return View();//video 83 pragim
-        } 
+            return View("AccessDenied");//video 83 pragim
+            //return View("NotFound");
+        }
 
 
 
