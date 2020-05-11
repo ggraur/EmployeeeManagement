@@ -2,12 +2,14 @@
 
 @{
     var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
 }
 
 <form method="post">
     <div class="card">
         <div class="card-header">
             <h2>Add or remove users from this role</h2>
+            <h5>Selected role <b class="text-uppercase">@roleName</b></h5>
         </div>
         <div class="card-body">
             @for (int i = 0; i < Model.Count; i++)

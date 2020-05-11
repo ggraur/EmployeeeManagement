@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeeManagement.Models;
+using EmployeeeManagement.Security;
 using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Builder;
@@ -14,13 +15,22 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+      
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Google.Apis.Auth.OAuth2;
+
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Mvc;
+//using Google.Apis.Drive.v2;
+
 
 namespace EmployeeeManagement
 {
     public class Startup
     {
+
         private IConfiguration _config;
 
         public Startup(IConfiguration config)
@@ -30,6 +40,8 @@ namespace EmployeeeManagement
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+
+ 
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -56,7 +68,88 @@ namespace EmployeeeManagement
                         .RequireAuthenticatedUser()
                         .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddXmlDataContractSerializerFormatters();
+            }).AddXmlSerializerFormatters();
+
+            services.AddAuthentication()
+               
+               .AddGoogle(options =>
+              {
+                //   IConfigurationSection googleAuthNSection =
+                //                    Configuration.GetSection("Authentication:Google");
+                  options.ClientId = "117879105443-118r56tho9d02cm4tlesnuqloqrb0sep.apps.googleusercontent.com";
+                  options.ClientSecret = "mvFRKMLTbDhuXBAKNthXvDzV";
+                  //options.CallbackPath = "";
+              })
+               .AddFacebook(options =>
+               {
+                   //   IConfigurationSection googleAuthNSection =
+                   //                    Configuration.GetSection("Authentication:Google");
+                   options.AppId = "589686828196035";
+                   options.AppSecret= "01ac752eed5d082d3ec148466b21daf4";
+                   //options.CallbackPath = "";
+               })
+
+               ;
+
+            
+
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.AccessDeniedPath = new PathString("/Administration/AccessDenied");
+            //});
+
+            //services.AddMvc(options =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //            .RequireAuthenticatedUser()
+            //            .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //}).AddXmlDataContractSerializerFormatters();
+
+            /* video 99 */
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy",
+                    policy => policy.RequireClaim("Delete Role"));
+
+                //options.AddPolicy("DeleteRolePolicy",
+                //    policy => policy.RequireAssertion(context =>
+                //    context.User.IsInRole("Admin") &&
+                //    context.User.HasClaim(claim => claim.Type == "Delete Role" && claim.Value == "true") ||
+                //    context.User.IsInRole("Super Admin")
+                //    ));
+
+                //options.AddPolicy("CreateRolePolicy",
+                //    policy => policy.RequireClaim("Create Role"));
+
+                //options.AddPolicy("EditRolePolicy",
+                //    policy => policy.RequireClaim("Edit Role", "true")
+                //                    .RequireRole("Admin")
+                //                    .RequireRole("Super Admin"));
+
+                options.AddPolicy("EditRolePolicy",
+                                    policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()
+                                    ));
+
+                //options.AddPolicy("EditRolePolicy",
+                //    policy => policy.RequireAssertion(context =>
+                //    context.User.IsInRole("Admin") &&
+                //    context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true") ||
+                //    context.User.IsInRole("Super Admin")
+                //    ));
+
+                //options.AddPolicy("AdminRolePolicy",
+                //   policy => policy.RequireRole("Admin"));
+
+                options.AddPolicy("AdminRolePolicy",
+               policy => policy.RequireAssertion(context =>
+               context.User.IsInRole("Admin") ||
+               context.User.IsInRole("Super Admin")
+                ));
+
+
+            });
 
 
             //getting loop and getiing erro 415
@@ -67,7 +160,11 @@ namespace EmployeeeManagement
             //services.AddScoped<IEmployeeRepository, MockEmployeeRepository>();
 
             //            services.AddTransient<IEmployeeRepository, MockEmployeeRepository>();//memory collection
+
             services.AddScoped<IEmployeeRepository, SqlEmployeeRepository>();//sql data base 
+            
+            services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
+            services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
 
         }
 

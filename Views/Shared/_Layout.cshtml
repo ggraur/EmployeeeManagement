@@ -26,6 +26,10 @@
               asp-fallback-test-property="position"
               asp-fallback-test-value="absolute"
               asp-suppress-fallback-integrity="true">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     </environment>
 
     <link href="~/css/site.css" rel="stylesheet" />
@@ -48,10 +52,9 @@
                    <li class="nav-item">
                        <a asp-action="create" asp-controller="home" class="nav-link">Create</a>
                    </li>
-                   @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                   @if ((signInManager.IsSignedIn(User) && User.IsInRole("Admin")) || (signInManager.IsSignedIn(User) && User.IsInRole("Super Admin"))) 
                    {
-
-                       <li class="nav-item dropdown">
+                       <li class="nav-item dropdown"> @*video 83*@
                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            Manage</a>
@@ -61,11 +64,8 @@
                                <a asp-action="ListRoles" asp-controller="Administration"
                                   class="dropdown-item">Roles</a>
                            </div>
-                            
                        </li>
-                    }
-
-
+                        }
 
                </ul>
                <ul class="navbar-nav ml-auto">
