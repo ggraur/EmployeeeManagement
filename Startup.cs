@@ -54,7 +54,11 @@ namespace EmployeeeManagement
             {
                 options.Password.RequiredLength = 10;
                 options.Password.RequiredUniqueChars = 3;
-            }).AddEntityFrameworkStores<AppDbContext>();
+
+                options.SignIn.RequireConfirmedEmail = true;
+
+            }).AddEntityFrameworkStores<AppDbContext>()
+              .AddDefaultTokenProviders();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             //services.AddMvc().AddXmlDataContractSerializerFormatters();
