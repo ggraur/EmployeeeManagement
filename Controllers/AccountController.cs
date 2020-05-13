@@ -67,9 +67,11 @@ namespace EmployeeeManagement.Controllers
                     var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     var confirmationLink = Url.Action("ResetPassword", "Account",
-                                                    new { userId = user.Id, token = token }, Request.Scheme);
+                                                    new { email = model.Email, token = token }, Request.Scheme);
 
                     logger.Log(Microsoft.Extensions.Logging.LogLevel.Warning, confirmationLink);/*video 61-64*/
+                    
+                    ViewBag.Email = model.Email;
 
                     return View("ForgotPasswordConfirmation");
                 }
@@ -80,9 +82,9 @@ namespace EmployeeeManagement.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string token, string userId)
+        public IActionResult ResetPassword(string token, string email)
         {
-            if (token == null || userId == null)
+            if (token == null || email == null)
             {
                 ModelState.AddModelError("", "Invalid Password Reset Token");
             }

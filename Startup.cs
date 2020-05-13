@@ -57,8 +57,18 @@ namespace EmployeeeManagement
 
                 options.SignIn.RequireConfirmedEmail = true;
 
+                options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+
             }).AddEntityFrameworkStores<AppDbContext>()
-              .AddDefaultTokenProviders();
+              .AddDefaultTokenProviders()
+              .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
+              ;
+
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                            o.TokenLifespan = TimeSpan.FromHours(5));
+
+            services.Configure<CustomEmailConfirmationTokenProviderOptions>(o =>
+                        o.TokenLifespan=TimeSpan.FromDays(3));/*video 119*/
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
             //services.AddMvc().AddXmlDataContractSerializerFormatters();
@@ -95,8 +105,8 @@ namespace EmployeeeManagement
 
                ;
 
-            
 
+       
 
             //services.ConfigureApplicationCookie(options =>
             //{
@@ -169,6 +179,8 @@ namespace EmployeeeManagement
             
             services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
+            services.AddSingleton<DataProtectionPurposeStrings>();
+
 
         }
 

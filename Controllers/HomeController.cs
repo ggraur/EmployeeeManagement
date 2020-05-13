@@ -7,6 +7,10 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
+using EmployeeeManagement.Security;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace EmployeeeManagement.Controllers
 {
@@ -22,27 +26,37 @@ namespace EmployeeeManagement.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
+        private readonly IDataProtector protector;/*video 120*/
+
         [Obsolete]
         public HomeController(IEmployeeRepository employeeRepository,
                               IHostingEnvironment hostingEnvironment,
-                              ILogger<HomeController> logger)
+                              ILogger<HomeController> logger,
+                              IDataProtectionProvider dataProtectionProvider,
+                              DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
              
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
             this._logger = logger;
+            protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue); /*video 120*/
         }
 
         [AllowAnonymous]
         public ViewResult Index()
         {
 
-            var model = _employeeRepository.GetAllEmployee();
+            var model = _employeeRepository.GetAllEmployee()
+                        .Select(e => 
+                        {
+                            e.EncryptedId = protector.Protect(e.Id.ToString());
+                            return e;
+                        });
             return View(model);
         }
 
         [AllowAnonymous]
-        public ViewResult Details(int? id)
+        public ViewResult Details(string id)
         {
             //throw new Exception("Error in details view");
             _logger.LogTrace("Trace Log");
@@ -52,12 +66,14 @@ namespace EmployeeeManagement.Controllers
             _logger.LogError("Error Log");
             _logger.LogCritical("Critical Log");
 
+            int employeeId = Convert.ToInt32(protector.Unprotect(id));
 
-            Employee employee = _employeeRepository.GetEmployee(id.Value);
+
+            Employee employee = _employeeRepository.GetEmployee(employeeId);
             if (employee==null) 
             {
                 Response.StatusCode = 404;
-                return View("EmployeeNotFound", id.Value);
+                return View("EmployeeNotFound", employeeId);
             }
 
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel
