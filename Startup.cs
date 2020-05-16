@@ -59,6 +59,9 @@ namespace EmployeeeManagement
 
                 options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
 
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
+
             }).AddEntityFrameworkStores<AppDbContext>()
               .AddDefaultTokenProviders()
               .AddTokenProvider<CustomEmailConfirmationTokenProvider<ApplicationUser>>("CustomEmailConfirmation");

@@ -77,6 +77,14 @@ namespace EmployeeeManagement.Controllers
                     }
                     return View();
                 }
+
+                /*added by george*/
+                if (model.FirstLogin)
+                {
+                    return LocalRedirect(model.ReturnUrl);
+                }
+                /*added by george*/
+
                  await signInManager.RefreshSignInAsync(user);
                     return View("AddPasswordConfirmation");
             }
@@ -85,15 +93,17 @@ namespace EmployeeeManagement.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword()
+        public  IActionResult  ChangePassword()
         {
-            var user = await userManager.GetUserAsync(User);
-            var userHasPassword = await userManager.HasPasswordAsync(user);
+            //var user = await userManager.GetUserAsync(User);
+            //var userHasPassword = await userManager.HasPasswordAsync(user);
 
-            if (userHasPassword)
-            {
-                return RedirectToAction("AddPassword");
-            }
+            //if (userHasPassword)
+            //{
+            //    //return RedirectToAction("AddPassword");
+            //    return RedirectToAction("ChangePassword");
+
+            //}
 
             return View();
         }
@@ -183,6 +193,11 @@ namespace EmployeeeManagement.Controllers
                     var result = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (result.Succeeded)
                     {
+                        if (await userManager.IsLockedOutAsync(user))
+                        {
+                            await userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
+                        }
+
                         return View("ResetPasswordConfirmation");
                     }
                     foreach (var error in result.Errors)
@@ -309,12 +324,12 @@ namespace EmployeeeManagement.Controllers
                 if (user != null && !user.EmailConfirmed &&
                     (await userManager.CheckPasswordAsync(user,model.Password)))
                 {
-                    ModelState.AddModelError(string.Empty, "Email not confirmed yet!");
+                    ModelState.AddModelError(string.Empty, "Account not activate, Please check you email and activate your account!");
                     return View(model);
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, 
-                                        model.RememberMe, false);
+                                        model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
@@ -327,6 +342,11 @@ namespace EmployeeeManagement.Controllers
                         return RedirectToAction("index", "home");
                     }
 
+                }
+
+                if (result.IsLockedOut)
+                {
+                    return View("AccountLocked");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
@@ -357,6 +377,8 @@ namespace EmployeeeManagement.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)/*--need for google/facebook autentification , video 106*/
         {
+            /*not working properly, not allowing singn trough facebook different users, getting only first sign in user.*/
+ 
             returnUrl = returnUrl ?? Url.Content("~/");
             LoginViewModel loginViewModel = new LoginViewModel
             {
@@ -378,6 +400,7 @@ namespace EmployeeeManagement.Controllers
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             ApplicationUser user = null;
+            
 
             if (email != null)
             {
@@ -388,6 +411,7 @@ namespace EmployeeeManagement.Controllers
                     ModelState.AddModelError(string.Empty, "Email not confirmed yet");
                     return View("Login", loginViewModel);
                 }
+
             }
 
             var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider,
@@ -421,8 +445,29 @@ namespace EmployeeeManagement.Controllers
                     }
                     await userManager.AddLoginAsync(user, info);
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    
-                    return LocalRedirect(returnUrl);
+
+                    //  return LocalRedirect(returnUrl);
+                    ///*added by george*/
+                    bool userHasPassword = false;
+                    userHasPassword = await userManager.HasPasswordAsync(user);
+
+                    if (!userHasPassword)
+                    {
+                        AddPasswordViewModel addPasswordViewModel = new AddPasswordViewModel();
+                        addPasswordViewModel.UserID = user.Id;
+                        addPasswordViewModel.NewPassword = string.Empty;
+                        addPasswordViewModel.ConfirmPassword = string.Empty;
+                        addPasswordViewModel.ReturnUrl = returnUrl;
+                        addPasswordViewModel.FirstLogin = true;
+
+                        //AddPasswordViewModel
+                        return View("AddPassword",addPasswordViewModel);
+                        //return RedirectToAction("ChangePassword");
+                    }
+                    ///*added by george*/
+
+
+
                 }
                 ViewBag.ErrorTitle = $"Email claim not received from:{info.LoginProvider}";
                 ViewBag.ErrorMessage = "Please contasct support on indo23md@yahoo.com";
