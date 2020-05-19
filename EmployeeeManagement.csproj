@@ -13,6 +13,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.45.0" />
     <PackageReference Include="Google.Apis.Auth.Mvc" Version="1.45.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.45.0" />
+    <PackageReference Include="jQuery.filedrop" Version="1.0.1" />
 
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
 

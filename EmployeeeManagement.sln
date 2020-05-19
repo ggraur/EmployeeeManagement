@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWebApplication", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServicesDemo", "..\WebServicesDemo\WebServicesDemo.csproj", "{12AC0966-CB68-4104-B2D7-B18AA5E00A5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCDragDropUpload", "..\MVCDragDropUpload\MVCDragDropUpload.csproj", "{0929C744-49CF-4665-8968-F2FCF9C29F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIDemo", "..\WebAPIDemo\WebAPIDemo.csproj", "{8B478A23-D712-49C6-9C9C-D0406590AF12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{12AC0966-CB68-4104-B2D7-B18AA5E00A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12AC0966-CB68-4104-B2D7-B18AA5E00A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12AC0966-CB68-4104-B2D7-B18AA5E00A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0929C744-49CF-4665-8968-F2FCF9C29F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0929C744-49CF-4665-8968-F2FCF9C29F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0929C744-49CF-4665-8968-F2FCF9C29F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0929C744-49CF-4665-8968-F2FCF9C29F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

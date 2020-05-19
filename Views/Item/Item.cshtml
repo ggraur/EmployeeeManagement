@@ -1,0 +1,62 @@
+﻿@{ 
+    ViewBag.Title = "Add Item";
+}
+
+<h2>Drag &Aacute; Drop file upload</h2>
+
+<div id="dropArea">
+    Drop your files here
+</div>
+<ul class="list-group" id="uploadList">
+
+</ul>
+
+<style>
+    #dropArea {
+        background: #b5b5b5;
+        border: black dashed 1px;
+        height: 50px;
+        text-align: center;
+        color: #fff;
+    }
+    .active-drop {
+        background:#77babf;
+        border:solid 2px blue;
+        opacity:0.5;
+        color:black !important;
+    }
+
+</style>
+
+@section Scripts{ 
+    <script src="~/Scripts/jquery.filedrop.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#dropArea').filedrop({
+            url: '@Url.Action("UploadFiles")',
+            allowedfiletypes: ['image/jpeg', 'image/png', 'image/gif'],
+            allowedfileextensions: ['.jpg', '.jpeg', '.png', '.gif'],
+            paramname: 'files',
+            maxfiles: 5,
+            maxfilesize: 5,
+            dragover: function () {
+                $('#dropArea').addClass('active-drop');
+            },
+            dragLeave: function () {
+                $('#dropArea').removeClass('active-drop');
+            },
+
+            drop: function () {
+                $('#dropArea').removeClass('active-drop');
+            },
+            afterAll: function () {
+                $('#dropArea').html('file(s) uploaded successfully');
+            },
+            uploadFinished: function (i, file, response, time) {
+                $('#uploadList').append('<li class="list-group-item">'+file.name+'</li>')
+            }
+
+            })
+    });
+</script>
+}
