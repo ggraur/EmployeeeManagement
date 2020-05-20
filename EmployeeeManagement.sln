@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCDragDropUpload", "..\MVC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIDemo", "..\WebAPIDemo\WebAPIDemo.csproj", "{8B478A23-D712-49C6-9C9C-D0406590AF12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeDataAccess", "..\EmployeeDataAccess\EmployeeDataAccess.csproj", "{0181B62D-16A4-4C1E-9BEF-54C9DC2EAEB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B478A23-D712-49C6-9C9C-D0406590AF12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0181B62D-16A4-4C1E-9BEF-54C9DC2EAEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0181B62D-16A4-4C1E-9BEF-54C9DC2EAEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0181B62D-16A4-4C1E-9BEF-54C9DC2EAEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0181B62D-16A4-4C1E-9BEF-54C9DC2EAEB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

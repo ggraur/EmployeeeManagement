@@ -23,7 +23,10 @@ namespace EmployeeeManagement.Models
         public Dept Department { get; set; }
 
         public string PhotoPath { get; set; }
-             
+
+        public string Gender { get; set; }             
+
+        public double Salary { get; set; }
 
 
     }

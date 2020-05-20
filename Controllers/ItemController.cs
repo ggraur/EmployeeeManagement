@@ -18,10 +18,10 @@ namespace EmployeeeManagement.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public static ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
-        { 
-        }
+        //[HttpPost]
+        //public static ActionResult UploadFiles(IEnumerable<HttpPostedFileBase> files)
+        //{ 
+        //}
 
     }
 }
