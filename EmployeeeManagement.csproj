@@ -11,7 +11,6 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis" Version="1.45.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.45.0" />
-    <PackageReference Include="Google.Apis.Auth.Mvc" Version="1.45.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.45.0" />
     <PackageReference Include="jQuery.filedrop" Version="1.0.1" />
 
@@ -27,7 +26,6 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.0-preview2.20084.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-preview.2.20120.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.0-preview.2.20120.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.0-preview.2.20120.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-preview.2.20120.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
