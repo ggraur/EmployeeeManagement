@@ -53,6 +53,10 @@
     <PackageReference Include="Microsoft.NETCore.DotNetHostPolicy" Version="5.0.0-preview.3.20214.6" />
     <PackageReference Include="Microsoft.NETCore.DotNetHostResolver" Version="5.0.0-preview.3.20214.6" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="5.0.0-preview.1.20120.5" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.9.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="5.0.0-preview.1.20120.5" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
