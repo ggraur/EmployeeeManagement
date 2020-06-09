@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeService", "..\Emplo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootstrapDemo", "..\BootstrapDemo\BootstrapDemo.csproj", "{91D580E1-0085-4F51-9E86-81E3137867B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angular2Demo", "..\Angular2Demo\Angular2Demo.csproj", "{4EBDD9FC-95B7-4D75-AE88-707F750E6131}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{91D580E1-0085-4F51-9E86-81E3137867B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91D580E1-0085-4F51-9E86-81E3137867B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91D580E1-0085-4F51-9E86-81E3137867B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EBDD9FC-95B7-4D75-AE88-707F750E6131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EBDD9FC-95B7-4D75-AE88-707F750E6131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EBDD9FC-95B7-4D75-AE88-707F750E6131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EBDD9FC-95B7-4D75-AE88-707F750E6131}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
